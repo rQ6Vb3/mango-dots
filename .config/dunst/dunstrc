@@ -1,0 +1,79 @@
+# ============================================================
+# DUNST CONFIG
+# Documentation: https://dunst-project.org/documentation/
+# ============================================================
+
+[global]
+    # --- Display ---
+    monitor = 0
+    follow = mouse
+    origin = top-right
+    offset = (8,34)
+    width = (0,400)
+    height = (0,800)
+    gap_size = 4
+    indicate_hidden = yes
+    shrink = no
+    transparency = 0
+
+    # --- Layout ---
+    separator_height = 2
+    padding = 12
+    horizontal_padding = 12
+    frame_width = 2
+    separator_color = frame
+    corner_radius = 0
+
+    # --- Text ---
+    font = JetBrainsMono NFP Bold 10
+    format = "<b>%s</b>\n%b"
+    line_height = 0
+    markup = full
+    alignment = left
+    vertical_alignment = center
+    word_wrap = yes
+    ellipsize = middle
+    ignore_newline = no
+    show_age_threshold = 60
+
+    # --- Icons ---
+    icon_position = left
+    min_icon_size = 50
+    max_icon_size = 50
+
+    # --- Behavior ---
+    sort = yes
+    idle_threshold = 120
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = no
+    sticky_history = no
+    history_length = 50
+    always_run_script = true
+    ignore_dbusclose = false
+    force_xinerama = false
+
+    # --- Mouse Actions ---
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
+
+    # --- External Tools ---
+    dmenu = /usr/bin/rofi -dmenu -p dunst:
+    browser = /usr/bin/brave
+
+    # --- Misc ---
+    title = Dunst
+    class = Dunst
+
+
+[experimental]
+    per_monitor_dpi = false
+
+[urgency_low]
+    timeout = 5
+
+[urgency_normal]
+    timeout = 5
+
+[urgency_critical]
+    timeout = 0

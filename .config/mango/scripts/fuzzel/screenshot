@@ -1,0 +1,53 @@
+#!/bin/bash
+set -euo pipefail
+
+filename="$(date +'Screenshot_'%Y-%m-%d_%H-%M-%S).png"
+folder="$HOME/Pictures/Screenshots"
+
+mkdir -p "$folder"
+filepath="$folder/$filename"
+
+
+notify() {
+    notify-send "$filename" -t 500
+}
+
+
+options=(fullscreen window region clipboard annotate)
+chosen=$(printf '%s\n' "${options[@]}" |
+	fuzzel -w 15 -d -p "󰹑  Screenshot  ")
+
+[[ -z "$chosen" ]] && exit
+
+
+case "$chosen" in
+  fullscreen)
+    grim "$filepath" && notify ;;
+
+  region)
+    g=$(slurp -d)
+    [ -z "$g" ] && exit 1
+    grim -g "$g" "$filepath" && notify
+    ;;
+
+  window)
+    g=$(mmsg get focusing-client | jq -r '"\(.x),\(.y) \(.width)x\(.height)"')
+    [ -z "$g" ] && exit 1
+    grim -g "$g" "$filepath" && notify
+    ;;
+
+  clipboard)
+    f=$(mktemp -t screenshot-XXXXXX.png)
+    g=$(slurp -d)
+    [ -z "$g" ] && exit 1
+
+    grim -g "$g" "$f"
+    wl-copy < "$f" && notify-send "Saved to clipboard" -t 500
+    rm -f "$f"
+    ;;
+
+  annotate)
+    grim "$filepath"
+    satty --filename "$filepath" --output-filename "$filepath" --actions-on-enter save-to-file --early-exit
+    ;;
+esac

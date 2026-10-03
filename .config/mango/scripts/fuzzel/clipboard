@@ -1,0 +1,12 @@
+#!/bin/bash
+
+chosen=$(cliphist list | fuzzel --counter -d -p "  Clipboard  |  ")
+ec=$?
+
+[[ -z "$chosen" ]] && exit
+
+case $ec in
+    0) echo "$chosen" | cliphist decode | wl-copy ;;
+    12) echo "$chosen" | cliphist delete ;;
+    *) exit ;;
+esac

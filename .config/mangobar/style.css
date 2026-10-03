@@ -1,0 +1,74 @@
+@define-color bg #171B1E;
+@define-color fg #D0D4CB;
+@define-color accent #60908C;
+
+
+
+/* ==================== Font ==================== */
+
+* {
+    font-family: "cherry";
+    font-size: 14px;
+    font-weight: Medium;
+}
+
+* {
+    color: @fg;
+    background: @bg;
+    padding: 12px;
+    border-radius: 0px;
+}
+
+#bar {
+    background: @bg;
+}
+
+#bar.sel {
+    background: @bg;
+}
+
+#tags {
+    background: @bg;
+    color: @fg;
+    padding: 10px;
+    border-radius: 0px;
+}
+
+#tags.active {
+    background: @bg;
+    color: @accent;
+    padding: 0px;
+}
+
+#tags.occupied {
+    background: @bg;
+    color: @fg;
+    padding: 0px;
+}
+
+#tags.urgent {
+    background: @bg;
+    color: @fg;
+    padding: 0px;
+}
+
+#tags.empty {
+    background: @bg;
+    color: @fg;
+    padding: 0px;
+}
+
+#tags.hover {
+    background: @accent;
+    color: @bg;
+    padding: 0px;
+}
+
+#title {
+    background: @bg;
+    color: @fg;
+}
+
+#clock {
+    padding-right: 8px;
+}

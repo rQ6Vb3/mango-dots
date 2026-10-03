@@ -1,0 +1,21 @@
+#!/bin/bash
+
+chosen=$(ps -eo user,pid,args |
+	awk -v user="$USER" '
+	    NR > 1 && $1 == user {
+		$1=""
+		sub(/^ /,"")
+		print
+	    }
+	' | 
+	fuzzel --counter -d -p "Kill  |  ")
+
+ec=$?
+[[ -z "$chosen" ]] && exit
+
+case $ec in
+    0) kill $(awk '{print $1}' <<< "$chosen") ;;
+    10) pkill $(awk '{print $2}' <<< "$chosen") ;;
+    *)  exit ;;
+esac
+

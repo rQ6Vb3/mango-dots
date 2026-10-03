@@ -1,0 +1,30 @@
+#!/bin/bash
+
+write_log() {
+    cat << EOF >> "$HOME/.uptime.log"
+---------------------
+S: $(uptime -s)
+E: $(date +'%Y-%m-%d %R:%S')
+$(uptime -p)
+
+EOF
+}
+
+action=$(echo -e "Suspend\nLogout\nReboot\nShutdown" | \
+	fuzzel -d -w 10 -p "  PWM    ")
+[[ -z "$action" ]] && exit
+
+confirm=$(echo -e "No\nYes" | fuzzel -d -w 10 -p "$action      ")
+[[ "$confirm" != "Yes" ]] && exit
+
+case "$action" in
+	Logout) loginctl terminate-user "$USER" ;;
+	Suspend) systemctl suspend ;;
+	Reboot)
+		write_log
+		systemctl reboot ;;
+	Shutdown)
+		write_log
+		systemctl poweroff
+		;;
+esac

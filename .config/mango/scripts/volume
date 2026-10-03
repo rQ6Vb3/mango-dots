@@ -1,0 +1,12 @@
+#!/bin/bash
+
+SINK="@DEFAULT_AUDIO_SINK@"
+MAX_VOL="1.0"
+STEP="2"
+
+case "$1" in
+  up)   wpctl set-volume -l "$MAX_VOL" "$SINK" "$STEP%+" ;;
+  down) wpctl set-volume -l "$MAX_VOL" "$SINK" "$STEP%-" ;;
+  mute) wpctl set-mute "$SINK" toggle ;;
+  *)    exit 1 ;;
+esac
